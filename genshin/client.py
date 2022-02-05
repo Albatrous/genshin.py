@@ -658,7 +658,7 @@ class GenshinClient:
         )
         return [SearchUser(**i["user"]) for i in data["list"]]
 
-    async def redeem_code(self, code: str, uid: int = None, *, lang: str = None) -> Dict[str, Any]:
+    async def redeem_code(self, code: str, uid: int = None, *, lang: str = None) -> None:
         """Redeems a gift code for the current user
 
         :param code: The code to redeem
@@ -669,7 +669,7 @@ class GenshinClient:
         if uid is not None:
             server = recognize_server(uid)
             lang = create_short_lang_code(lang or self.lang)
-            data = await self.request(
+            await self.request(
                 "https://hk4e-api-os.mihoyo.com/common/apicdkey/api/webExchangeCdkey",
                 params=dict(
                     uid=uid,
@@ -679,7 +679,7 @@ class GenshinClient:
                     lang=lang,
                 ),
             )
-            return data
+            return
 
         accounts = [a for a in await self.genshin_accounts() if a.level >= 10]
 
