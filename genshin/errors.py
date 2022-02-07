@@ -161,6 +161,7 @@ _errors: Dict[int, Union[_TGE, str, Tuple[_TGE, Optional[str]]]] = {
     -1073: (AccountNotFound, "Account has no game account bound to it."),
     -2001: (RedemptionInvalid, "Redemption code has expired."),
     -2004: RedemptionInvalid,
+    -2003: RedemptionInvalid,
     -2016: (RedemptionCooldown, "Redemption in cooldown."),
     -2017: (RedemptionClaimed, "Redeption code has been claimed already."),
     -2021: (RedemptionException, "Cannot claim codes for account with adventure rank lower than 10."),
@@ -214,8 +215,7 @@ def raise_for_retcode(data: Dict[str, Any]) -> NoReturn:
     elif m.startswith("character id"):
         char = m.split(":")[1].split()[0]
         raise GenshinException(
-            data, f"User does not have a character with id {char}"
-        )
+            data, f"User does not have a character with id {char}")
 
     elif r in ERRORS:
         exctype, msg = ERRORS[r]
